@@ -52,14 +52,14 @@ public class Mensaje
      * @param linea es la línea a agregar.
      */
     public void agregarLinea(String linea)
-    {
+    { 
         if (linea == null)
             throw new IllegalArgumentException("La linea a agregar no debe ser null.");
         if (linea.length() > LONG_MAX_LINEA)
             throw new IllegalArgumentException("Longitud invalida. La linea no debe tener más de 80 caracteres.");
         if (!esAscii(linea)) 
             throw new IllegalArgumentException("La linea a agregar contiene caracteres no ascii.");
-        lineas.add(linea);
+          lineas.add(linea);
     }
     
     /**
@@ -73,10 +73,20 @@ public class Mensaje
      * @param pos es la posición en la cual se desea agregar la línea.
      */
     public void agregarLinea(int pos, String linea)
-    {
-        // TODO: Implementar este método
-    }
-    
+    { //Precondició: La linea no debe ser null
+        if (linea == null)
+            throw new IllegalArgumentException("La linea no puede ser null");
+        //Solo se admiten caracteres Ascii
+        If (!esAscii (linea))
+            throw new IllegalArgumentException("La linea a ingresar debe ser con caracteres en codigo Ascci");
+        //La lingitud debe ser menos o igual que 80
+         if(linea.length() > LONG_MAX_LINEA)
+        throw new IllegalArgumentException ("Su longitud debe ser menor o igual a 80");
+       //La posición se debe encontrar entre 0 y la cantidad de lines del mensaje
+        if (pos < 0 || pos > cantLineas())
+          throw new IllegalArgumentException("Posicion de linea invalida");
+        //La linea a agregar
+        lineas.add(pos,linea);
     /**
      * Elimina la línea de una posición determinada del mensaje.
      * Precondición: pos debe estar entre cero y longitud (numero de líneas) menos uno del mensaje.
@@ -133,11 +143,26 @@ public class Mensaje
      */
     public boolean equals(Mensaje otro)
     {
-        // TODO: Implementar este método sustituyendo la línea debajo, con el 
-        // código de la implementación
+        //Verifica si el objeto "otro" es nulo y lanza la excepcion si lo es.
+        if (otro == null)
+        throw new IllegalArgumentException("otro debe ser distinto a null");
+        
+        // Compara la cantidad de líneas del mensaje actual con el mensaje 'otro'.
+        // Si no tienen la misma cantidad de líneas, retorna falso.
+        if(cantLineas() != otro.cantLineas())
+        return false;
+        
+        // Itera sobre cada línea del mensaje.
+        // Compara cada línea del mensaje actual con la correspondiente en 'otro'.
+        // Si alguna línea es igual, retorna verdadero. Si ninguna linea es igual, retorna falso.
+        for(int i = 0; i < cantLineas(); i++)
+        {
+            if(obtenerLinea(i).equals(otro.obtenerLinea(i)))
+            return true;
+       
         return false;
     }
-    
+    }
     /**
      * Genera una representación de cadena de caracteres del mensaje completo.
      * @return una cadena conteniendo el mensaje completo.
