@@ -127,17 +127,7 @@ public class CodificadorMensajes
     private int[] generarCodigoEncripcion(String str) 
     {
         // TODO: Implementar este método sustituyendo la línea
-        int suma = 0;
-      flor (int = 0, i<Str.length(); i ++){
-       int a = str.CharAt(i);
-      suma = suma+a;
-     }
-      int CodEncript = Suma % 99991
-       int a = 0
-     for(int i = CodEncript.lenght; (>= 0 ; i --);{
-       int a = str.CharAt(i);
-      system.out.println (a)
-     }
+        
         return null;
     }
     
