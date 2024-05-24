@@ -160,10 +160,12 @@ public class Mensaje
         {
             if(obtenerLinea(i).equals(otro.obtenerLinea(i)))
             return true;
-       
+        }
         return false;
+    
     }
-    }
+
+    
     /**
      * Genera una representación de cadena de caracteres del mensaje completo.
      * @return una cadena conteniendo el mensaje completo.
