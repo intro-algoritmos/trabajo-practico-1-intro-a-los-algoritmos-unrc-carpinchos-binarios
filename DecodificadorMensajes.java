@@ -68,9 +68,22 @@ public class DecodificadorMensajes
      * mensajeDecodificado es null).
      */
      
-     public void decodificarMensaje() {
-         
-        }
+     public void decodificarMensaje(String[] lineasMensajeCifrado) {
+    // Verificar si el mensaje ya ha sido descifrado
+    if (mensajeDecodificado != null) {
+        throw new IllegalStateException("El mensaje ya fue descifrado");
+    }
+
+    // Inicializar el mensaje decodificado
+    mensajeDecodificado = new Mensaje();
+
+    // Recorrer cada línea del mensaje cifrado y desencriptarla
+    for (String linea : lineasMensajeCifrado) {
+        String lineaDecodificada = desencriptarCadena(linea, codigoEncripcion);
+        mensajeDecodificado.agregarLinea(lineaDecodificada);
+    } 
+    }
+
     /**
      * Retorna el mensaje ya decodificado/descifrado.
      * Precondición: el mensaje debe haber sido decodificado previamente (i.e., 
@@ -108,7 +121,7 @@ public class DecodificadorMensajes
     }
     
     return desencriptado;
-}
+    }
 
     }
 
