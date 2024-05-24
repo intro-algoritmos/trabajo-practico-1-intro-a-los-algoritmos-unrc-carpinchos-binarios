@@ -73,20 +73,21 @@ public class Mensaje
      * @param pos es la posición en la cual se desea agregar la línea.
      */
     public void agregarLinea(int pos, String linea)
-    { //Precondició: La linea no debe ser null
-        if (linea == null)
+    { 
+      if (linea == null)
             throw new IllegalArgumentException("La linea no puede ser null");
         //Solo se admiten caracteres Ascii
-        If (!esAscii (linea))
+      if (!esAscii (linea))
             throw new IllegalArgumentException("La linea a ingresar debe ser con caracteres en codigo Ascci");
         //La lingitud debe ser menos o igual que 80
-         if(linea.length() > LONG_MAX_LINEA)
-        throw new IllegalArgumentException ("Su longitud debe ser menor o igual a 80");
+      if(linea.length() > LONG_MAX_LINEA)
+           throw new IllegalArgumentException ("Su longitud debe ser menor o igual a 80");
        //La posición se debe encontrar entre 0 y la cantidad de lines del mensaje
-        if (pos < 0 || pos > cantLineas())
+      if (pos < 0 || pos > cantLineas())
           throw new IllegalArgumentException("Posicion de linea invalida");
         //La linea a agregar
-        lineas.add(pos,linea);
+      lineas.add(pos,linea);
+    }   
     /**
      * Elimina la línea de una posición determinada del mensaje.
      * Precondición: pos debe estar entre cero y longitud (numero de líneas) menos uno del mensaje.
