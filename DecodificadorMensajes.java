@@ -1,4 +1,5 @@
-
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Clase DecodificadorMensajes: representa una componente capaz de descifrar
  * un mensaje en formato texto, dado el mensaje y el código usado para la 
@@ -14,6 +15,7 @@
  * @author N. Aguirre
  * @version 0.1
  */
+
 public class DecodificadorMensajes
 {
     /**
@@ -30,6 +32,12 @@ public class DecodificadorMensajes
      * Mensaje decodificado
      */
     private Mensaje mensajeDecodificado;
+    
+    private Mensaje mensajeCifrado;
+    
+    private int[] codigo;
+    
+    private int lineas;
 
     /**
      * Constructor de la clase DecodificadorMensajes.
@@ -49,17 +57,20 @@ public class DecodificadorMensajes
         codigoEncripcion = codigo;
         mensajeDecodificado = null;
     }
-
+    public int getLineas()
+     {
+         return lineas;
+     }
+    
     /**
      * Desencripta el mensaje. El mensaje no debe estar desencriptado.
      * Precondición: El mensaje aún no fue descifrado (i.e., el campo 
      * mensajeDecodificado es null).
      */
-    public void decodificarMensaje() 
-    {
-        // TODO: Implementar este método
-    }
-    
+     
+     public void decodificarMensaje() {
+         
+        }
     /**
      * Retorna el mensaje ya decodificado/descifrado.
      * Precondición: el mensaje debe haber sido decodificado previamente (i.e., 
@@ -67,7 +78,7 @@ public class DecodificadorMensajes
      * Postcondicion: se retorna el mensaje descifrado/decodificado.
      * @return el mensaje descifrado.
      */
-    public Mensaje obtenerMensajeDecodificado() {
+    public  Mensaje mensajeDecodificado(){
         if (mensajeDecodificado == null)
             throw new IllegalStateException("Mensaje aún no decodificado");
         return mensajeDecodificado;
@@ -86,9 +97,19 @@ public class DecodificadorMensajes
      * @param codigo es el código a utilizar para la desencripción
      */
     private String desencriptarCadena(String str, int[] codigo) {
-        // TODO: Implementar este método, sustituyendo la línea
-        // debajo con el código correspondiente a la funcionalidad
-        return null;
+    String desencriptado = "";
+    int longitudCodigo = codigo.length;
+    
+    for (int i = 0; i < str.length(); i++) {
+        char caracter = str.charAt(i);
+        int codigoActual = codigo[i % longitudCodigo]; // Obtener el código de desencriptación actual
+        int nuevoCaracter = (caracter - codigoActual + 128) % 128; // Calcular el nuevo carácter desencriptado
+        desencriptado += (char) nuevoCaracter; // Convertir el nuevo código a caracter y agregarlo a la cadena desencriptada
     }
     
+    return desencriptado;
 }
+
+    }
+
+
