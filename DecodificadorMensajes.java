@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+
 /**
  * Clase DecodificadorMensajes: representa una componente capaz de descifrar
  * un mensaje en formato texto, dado el mensaje y el código usado para la 
@@ -15,29 +14,22 @@ import java.util.List;
  * @author N. Aguirre
  * @version 0.1
  */
-
 public class DecodificadorMensajes
 {
     /**
      * Mensaje codificado
      */
     private Mensaje mensajeADecodificar;
-    
+
     /**
      * Código a utilizar
      */
     private int[] codigoEncripcion;
-    
+
     /**
      * Mensaje decodificado
      */
     private Mensaje mensajeDecodificado;
-    
-    private Mensaje mensajeCifrado;
-    
-    private int[] codigo;
-    
-    private int lineas;
 
     /**
      * Constructor de la clase DecodificadorMensajes.
@@ -57,31 +49,23 @@ public class DecodificadorMensajes
         codigoEncripcion = codigo;
         mensajeDecodificado = null;
     }
-    public int getLineas()
-     {
-         return lineas;
-     }
-    
+
     /**
      * Desencripta el mensaje. El mensaje no debe estar desencriptado.
      * Precondición: El mensaje aún no fue descifrado (i.e., el campo 
      * mensajeDecodificado es null).
      */
-     
-     public void decodificarMensaje(String[] lineasMensajeCifrado) {
-    // Verificar si el mensaje ya ha sido descifrado
-    if (mensajeDecodificado != null) {
-        throw new IllegalStateException("El mensaje ya fue descifrado");
-    }
-
-    // Inicializar el mensaje decodificado
-    mensajeDecodificado = new Mensaje();
-
-    // Recorrer cada línea del mensaje cifrado y desencriptarla
-    for (String linea : lineasMensajeCifrado) {
-        String lineaDecodificada = desencriptarCadena(linea, codigoEncripcion);
-        mensajeDecodificado.agregarLinea(lineaDecodificada);
-    } 
+    public void decodificarMensaje() 
+    {
+        if (mensajeDecodificado != null) {
+            throw new IllegalStateException("El mensaje ya está decodificado");
+        }
+        mensajeDecodificado = new Mensaje();
+        for (int i = 0; i < mensajeADecodificar.cantLineas(); i++) {
+            String curr = mensajeADecodificar.obtenerLinea(i);
+            String currDecodificada = desencriptarCadena(curr, codigoEncripcion);
+            mensajeDecodificado.agregarLinea(currDecodificada);
+        }
     }
 
     /**
@@ -91,12 +75,12 @@ public class DecodificadorMensajes
      * Postcondicion: se retorna el mensaje descifrado/decodificado.
      * @return el mensaje descifrado.
      */
-    public  Mensaje mensajeDecodificado(){
+    public Mensaje obtenerMensajeDecodificado() {
         if (mensajeDecodificado == null)
             throw new IllegalStateException("Mensaje aún no decodificado");
         return mensajeDecodificado;
     }
-    
+
     /**
      * Desencripta una cadena, dado un código numérico. Se usan los dígitos del código
      * para reemplazar cada caracter de la cadena por el caracter correspondiente a 
@@ -110,19 +94,16 @@ public class DecodificadorMensajes
      * @param codigo es el código a utilizar para la desencripción
      */
     private String desencriptarCadena(String str, int[] codigo) {
-    String desencriptado = "";
-    int longitudCodigo = codigo.length;
-    
-    for (int i = 0; i < str.length(); i++) {
-        char caracter = str.charAt(i);
-        int codigoActual = codigo[i % longitudCodigo]; // Obtener el código de desencriptación actual
-        int nuevoCaracter = (caracter - codigoActual + 128) % 128; // Calcular el nuevo carácter desencriptado
-        desencriptado += (char) nuevoCaracter; // Convertir el nuevo código a caracter y agregarlo a la cadena desencriptada
+        if (str == null) throw new IllegalArgumentException("Cadena nula");
+        if (codigo == null) throw new IllegalArgumentException("Código inválido");
+        String result = "";
+        int indiceCodigo = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char curr = str.charAt(i);
+            char currDesencriptado = (char) ((curr - codigo[indiceCodigo] + 128) % 128);
+            result = result + currDesencriptado;
+            indiceCodigo = (indiceCodigo + 1) % codigo.length;
     }
-    
-    return desencriptado;
-    }
-
-    }
-
-
+     return result;
+}
+}
