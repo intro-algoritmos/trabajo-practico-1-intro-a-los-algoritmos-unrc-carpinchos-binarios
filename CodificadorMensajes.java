@@ -56,15 +56,14 @@ public class CodificadorMensajes
      */
     public void codificarMensaje() 
     {
-        if (mensajeCodificado != null) {
+          if (mensajeCodificado != null) {
             // mensaje ya codificado
             throw new IllegalStateException("El mensaje ya está codificado");
         }
         if (mensajeACodificar.cantLineas() == 0) {
             mensajeCodificado = new Mensaje();
             codigoEncripcion = new int[0];
-        }
-        else {
+        } else {
             mensajeCodificado = new Mensaje();
             codigoEncripcion = generarCodigoEncripcion(mensajeACodificar.obtenerLinea(0));
             for (int i = 0; i < mensajeACodificar.cantLineas(); i++) {
@@ -73,7 +72,8 @@ public class CodificadorMensajes
                 mensajeCodificado.agregarLinea(currCodificada);
             }
         }
-    }
+        }
+    
     
     /**
      * Cambia el mensaje a codificar.
@@ -125,10 +125,17 @@ public class CodificadorMensajes
      * 420. Luego, el código de inscripción es el arreglo {4, 2, 0}.
      */
     private int[] generarCodigoEncripcion(String str) 
-    {
-        // TODO: Implementar este método sustituyendo la línea
-        
-        return null;
+    { int suma = 0;
+        for (int i = 0; i < str.length(); i++) {
+            suma += str.charAt(i);
+        }
+        int resto = suma % 99991;
+        String restoStr = Integer.toString(resto);
+        int[] codigo = new int[restoStr.length()];
+        for (int i = 0; i < restoStr.length(); i++) {
+            codigo[i] = Character.getNumericValue(restoStr.charAt(i));
+        }
+        return codigo;
     }
     
     /**
