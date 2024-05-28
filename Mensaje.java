@@ -158,10 +158,10 @@ public class Mensaje
         // Si alguna línea es igual, retorna verdadero. Si ninguna linea es igual, retorna falso.
         for(int i = 0; i < cantLineas(); i++)
         {
-            if(obtenerLinea(i).equals(otro.obtenerLinea(i)))
-            return true;
+            if(!obtenerLinea(i).equals(otro.obtenerLinea(i)))
+            return false;
         }
-        return false;
+        return true;
     
     }
 
