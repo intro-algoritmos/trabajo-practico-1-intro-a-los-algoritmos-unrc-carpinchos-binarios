@@ -125,18 +125,33 @@ public class CodificadorMensajes
      * 420. Luego, el código de inscripción es el arreglo {4, 2, 0}.
      */
     private int[] generarCodigoEncripcion(String str) 
-    {
-        int suma =0;
-        for (int i = 0; i < str.length(); i++){
-            suma+= str.charAt(i);
-        }
-        int resto = suma % 99991;
-        String restoStr = Integer.toString(resto);
-        int[] codigo = new int[restoStr.length()];
-        for (int i = 0; i < restoStr.length(); i++){
-            codigo[i]= Character.getNumericValue(restoStr.charAt(i));
-        }
-        return codigo;
+    { 
+     int suma = 0;
+    for (int i = 0; i < str.length(); i++) {
+        suma += str.charAt(i);
+    }
+     int resto = suma % 99991;
+
+    // Calcular la longitud del número
+     int num = resto;
+     int length = 0;
+    while (num > 0) {
+        length++;
+        num /= 10;
+    }
+
+    // Crear el arreglo de longitud adecuada
+     int[] codigo = new int[length];
+    
+    // Llenar el arreglo con los dígitos del resto
+     num = resto;
+    for (int i = length - 1; i >= 0; i--) {
+        codigo[i] = num % 10;
+        num /= 10;
+    }
+
+    return codigo;
+        
         }
         
     
