@@ -82,7 +82,7 @@ public class Mensaje
         //La lingitud debe ser menos o igual que 80
       if(linea.length() > LONG_MAX_LINEA)
            throw new IllegalArgumentException ("Su longitud debe ser menor o igual a 80");
-       //La posición se debe encontrar entre 0 y la cantidad de lines del mensaje
+       //La posición se debe encontrar entre 0 y la cantidad de lineas del mensaje
       if (pos < 0 || pos > cantLineas())
           throw new IllegalArgumentException("Posicion de linea invalida");
         //La linea a agregar
